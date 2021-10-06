@@ -4,6 +4,7 @@ import Layout from './layouts/Layout';
 
 import Home from '@/views/Home';
 import Login from '@/views/Login';
+import AuthRoute from '@/components/AuthRoute';
 import { useAppSelector } from './hooks';
 
 const App: React.FC = () => {
@@ -16,9 +17,9 @@ const App: React.FC = () => {
           <Route path="/login">
             {isAuthenticated ? <Redirect to="/" /> : <Login />}
           </Route>
-          <Route exact path="/">
-            {isAuthenticated ? <Home /> : <Redirect to="/login" />}
-          </Route>
+          <AuthRoute exact path="/">
+            <Home />
+          </AuthRoute>
           <Route path="*">
             <Redirect to="/" />
           </Route>
