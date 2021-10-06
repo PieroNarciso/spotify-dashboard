@@ -1,5 +1,8 @@
 module.exports = {
-  purge: ['./src/**/*.{js,jsx,ts,tsx}', './index.html'],
+  purge: {
+    content: ['./src/**/*.{js,jsx,ts,tsx}', './index.html'],
+    options: {}
+  },
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {},
@@ -7,5 +10,5 @@ module.exports = {
   variants: {
     extend: {},
   },
-  plugins: [],
+  plugins: [require('daisyui')],
 }
