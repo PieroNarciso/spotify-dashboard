@@ -18,6 +18,10 @@ const userSlice = createSlice({
       state.access_token = action.payload;
       state.authenticated = true;
     },
+    logout(state) {
+      state.access_token = '';
+      state.authenticated = false;
+    }
   },
 });
 
