@@ -13,14 +13,14 @@ const Home: React.FC = () => {
   }, [])
 
   return (
-    <div>
+    <React.Fragment>
       <InitialModal />
-      <ul className="mt-10">
+      <div className="mt-10 grid grid-cols-2 gap-2">
       {tracks.map(track => (
-        <TrackItem key={track.id} track={track} />
+        <TrackItem className="col-span-1" key={track.id} track={track} />
         ))}
-      </ul>
-    </div>
+      </div>
+    </React.Fragment>
   )
 };
 
