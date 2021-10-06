@@ -4,17 +4,16 @@ import React from 'react';
 
 interface TrackItemProps {
   track: Track;
+  className?: string;
 }
 
-const TrackItem: React.FC<TrackItemProps> = (props) => {
+const TrackItem: React.FC<TrackItemProps> = ({ className, ...props }) => {
   const { play, pause } = useAudio(props.track.preview_url);
   return (
-    <div onMouseEnter={play} onMouseLeave={pause}>
-      <div data-tip={props.track.name} className="tooltip">
-        <img src={props.track.album?.images[0].url}></img>
-      </div>
+    <div onMouseEnter={play} onMouseLeave={pause} className={className}>
+      <img src={props.track.album?.images[0].url} />
     </div>
-  )
+  );
 };
 
 export default TrackItem;
