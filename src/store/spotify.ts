@@ -1,13 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Track } from '@/interfaces';
-import { getUserTopTracks } from './spotify.thunks';
+import { getUserTopArtitsTopTracks, getUserTopTracks } from './spotify.thunks';
 
 interface SpotifyState {
   tracks: Track[];
+  artistsTopTracks: Track[];
 }
 
 const initialState: SpotifyState = {
   tracks: [],
+  artistsTopTracks: [],
 };
 
 const spotifySlice = createSlice({
@@ -15,12 +17,19 @@ const spotifySlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(
-      getUserTopTracks.fulfilled,
-      (state, action: PayloadAction<Track[]>) => {
-        state.tracks = action.payload;
-      }
-    );
+    builder
+      .addCase(
+        getUserTopTracks.fulfilled,
+        (state, action: PayloadAction<Track[]>) => {
+          state.tracks = action.payload;
+        }
+      )
+      .addCase(
+        getUserTopArtitsTopTracks.fulfilled,
+        (state, action: PayloadAction<Track[]>) => {
+          state.artistsTopTracks = action.payload;
+        }
+      );
   },
 });
 

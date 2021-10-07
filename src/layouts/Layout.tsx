@@ -12,7 +12,7 @@ const Layout: React.FC = ({ children }) => {
           <SideBar />
         </div>
       )}
-      <div className="px-4 py-4">{children}</div>
+      <div className="min-h-screen px-4 py-4">{children}</div>
     </div>
   );
 };

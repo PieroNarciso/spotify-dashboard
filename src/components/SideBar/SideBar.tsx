@@ -1,6 +1,7 @@
 import React from 'react';
-import { MdArtTrack, MdLogout, MdModeStandby } from 'react-icons/md'
-import { Link } from 'react-router-dom';
+import { MdLogout, MdModeStandby, MdOutlineLibraryMusic, MdSearch, MdStar } from 'react-icons/md'
+
+import NavBtn from '../NavBtn';
 
 interface SideBarProps {
   className?: string;
@@ -18,15 +19,15 @@ const SideBar: React.FC<SideBarProps> = ({ className }) => {
         </div> 
         {/* Navegation */}
         <div className="flex flex-col gap-y-3">
-          <Link className="btn btn-sm btn-circle bg-primary hover:bg-primary-focus" to="/">
-            <MdArtTrack className="w-5 h-5"/>
-          </Link>
-          <Link className="btn btn-sm btn-circle bg-primary hover:bg-primary-focus" to="/">
-            <MdArtTrack className="w-5 h-5"/>
-          </Link>
-          <Link className="btn btn-sm btn-circle bg-primary hover:bg-primary-focus" to="/">
-            <MdArtTrack className="w-5 h-5"/>
-          </Link>
+          <NavBtn to="/">
+            <MdOutlineLibraryMusic className="w-5 h-5"/>
+          </NavBtn>
+          <NavBtn to="/artists">
+            <MdStar className="w-5 h-5"/>
+          </NavBtn>
+          <NavBtn to="/search">
+            <MdSearch className="w-5 h-5"/>
+          </NavBtn>
         </div>
         {/* Logout */}
         <div>

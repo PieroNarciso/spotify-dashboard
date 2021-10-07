@@ -10,7 +10,7 @@ export const useHashQuery = () => {
   return new URLSearchParams(useLocation().hash.substring(1));
 }
 
-export const useAudio = (url: string) => {
+export const useAudio = (url: string, volume = 0.1) => {
   const [audio] = useState(new Audio(url));
   const [playing, setPlaying] = useState(false);
 
@@ -19,7 +19,10 @@ export const useAudio = (url: string) => {
   const play = () => setPlaying(true);
 
   useEffect(() => {
-    playing ? audio.play() : audio.pause();
+    if (playing) {
+      audio.play();
+      audio.volume = volume;
+    } else audio.pause();
   }, [playing]);
 
   useEffect(() => {

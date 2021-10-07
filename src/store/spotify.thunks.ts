@@ -11,21 +11,33 @@ export const getUserTopTracks = createAsyncThunk<
   const state = thunkApi.getState();
   const response = await api.get<{ items: Track[] }>('/me/top/tracks', {
     headers: {
-      Authorization: `Bearer ${state.user.access_token}`,
+      Authorization: `Bearer ${state.user.accessToken}`,
     },
   });
   return response.data.items;
 });
 
-export const getUserTopArtits = createAsyncThunk<Artist[], null, { dispatch: AppDispatch, state: RootState }>(
+export const getUserTopArtitsTopTracks = createAsyncThunk<Track[], null, { dispatch: AppDispatch, state: RootState }>(
   '/user/artists' ,
   async (_, thunkApi) => {
     const state = thunkApi.getState();
     const response = await api.get<{ items: Artist[] }>('/me/top/artists', {
       headers: {
-        Authorization: `Bearer ${state.user.access_token}`,
+        Authorization: `Bearer ${state.user.accessToken}`,
       }
     });
-    return response.data.items;
+    const tracks: Track[] = [];
+    for (const artist of response.data.items) {
+      const response = await api.get<{ tracks: Track[] }>(`/artists/${artist.id}/top-tracks`, {
+        headers: {
+          Authorization: `Bearer ${state.user.accessToken}`
+        },
+        params: {
+          market: 'US'
+        }
+      });
+      tracks.push(response.data.tracks[0]);
+    }
+    return tracks;
   }
 );

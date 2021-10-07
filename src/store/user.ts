@@ -2,12 +2,14 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface UserState {
   authenticated: boolean;
-  access_token: string;
+  accessToken: string;
+  firstTime: boolean;
 }
 
 const initialState: UserState = {
   authenticated: false,
-  access_token: '',
+  accessToken: '',
+  firstTime: true,
 }
 
 const userSlice = createSlice({
@@ -15,12 +17,15 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     authenticate(state, action: PayloadAction<string>) {
-      state.access_token = action.payload;
+      state.accessToken = action.payload;
       state.authenticated = true;
     },
     logout(state) {
-      state.access_token = '';
+      state.accessToken = '';
       state.authenticated = false;
+    },
+    toogleFirstTime(state) {
+      state.firstTime = false;
     }
   },
 });
