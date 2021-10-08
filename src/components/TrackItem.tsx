@@ -8,7 +8,7 @@ interface TrackItemProps {
 }
 
 const TrackItem: React.FC<TrackItemProps> = ({ className, ...props }) => {
-  const { play, pause } = useAudio(props.track.preview_url);
+  const { play, pause } = useAudio(props.track.preview_url || '');
   return (
     <div onMouseEnter={play} onMouseLeave={pause} className={className}>
       <img className="w-full h-full" src={props.track.album?.images[0].url} />

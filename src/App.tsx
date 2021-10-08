@@ -12,6 +12,7 @@ import Login from '@/views/Login';
 import AuthRoute from '@/components/AuthRoute';
 import { useAppSelector } from './hooks';
 import Artist from './views/Artist';
+import Search from './views/Search';
 
 const App: React.FC = () => {
   const isAuthenticated = useAppSelector((state) => state.user.authenticated);
@@ -30,7 +31,7 @@ const App: React.FC = () => {
             <Artist />
           </AuthRoute>
           <AuthRoute exact path="/search">
-            <div>Search</div>
+            <Search />
           </AuthRoute>
           <Route path="*">
             <Redirect to="/" />

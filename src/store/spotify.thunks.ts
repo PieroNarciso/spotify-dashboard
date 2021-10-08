@@ -48,3 +48,34 @@ export const getUserTopArtitsTopTracks = createAsyncThunk<
   );
   return tracks;
 });
+
+export const getRecommendations = createAsyncThunk<
+  Track[],
+  string,
+  { state: RootState }
+>('track/recommendations', async (query, thunkApi) => {
+  const state = thunkApi.getState();
+  const responseTrack = await api.get<{ tracks: { items: Track[] } }>(
+    '/search',
+    {
+      headers: {
+        Authorization: `Bearer ${state.user.accessToken}`,
+      },
+      params: {
+        q: query,
+        type: 'track',
+        limit: 1,
+      },
+    }
+  );
+  const response = await api.get<{ tracks: Track[] }>('/recommendations', {
+    headers: {
+      Authorization: `Bearer ${state.user.accessToken}`,
+    },
+    params: {
+      seed_tracks: responseTrack.data.tracks.items[0].id,
+      min_popularity: 50,
+    },
+  });
+  return response.data.tracks;
+});
