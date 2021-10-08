@@ -11,7 +11,7 @@ const Home: React.FC = () => {
   const firstTime = useAppSelector((state) => state.user.firstTime);
   const tracks = useAppSelector((state) => state.spotify.tracks);
   useEffect(() => {
-    dispatch(getUserTopTracks(null));
+    dispatch(getUserTopTracks());
   }, []);
 
   return (

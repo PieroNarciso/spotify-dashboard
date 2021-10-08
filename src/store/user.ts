@@ -1,9 +1,12 @@
+import { UserProfile } from '@/interfaces';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { getUserProfile } from './user.thunks';
 
 interface UserState {
   authenticated: boolean;
   accessToken: string;
   firstTime: boolean;
+  profile?: UserProfile;
 }
 
 const initialState: UserState = {
@@ -28,6 +31,11 @@ const userSlice = createSlice({
       state.firstTime = false;
     }
   },
+  extraReducers: (builder) => {
+    builder.addCase(getUserProfile.fulfilled, (state, action: PayloadAction<UserProfile>) => {
+      state.profile = action.payload;
+    });
+  }
 });
 
 export const userActions = userSlice.actions;

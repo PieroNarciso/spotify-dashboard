@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom';
 import { AUTH_LINK } from '@/api';
 import { useAppDispatch, useHashQuery } from '@/hooks';
 import { userActions } from '@/store/user';
+import { getUserProfile } from '@/store/user.thunks';
 
 const Login: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -14,6 +15,7 @@ const Login: React.FC = () => {
   const token = query.get('access_token');
   if (token) {
     dispatch(userActions.authenticate(token));
+    dispatch(getUserProfile());
     history.push('/');
   }
 

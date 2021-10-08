@@ -10,7 +10,7 @@ const Artist: React.FC = () => {
   const tracks = useAppSelector(state => state.spotify.artistsTopTracks);
 
   useEffect(() => {
-    dispatch(getUserTopArtitsTopTracks(null));
+    dispatch(getUserTopArtitsTopTracks());
   }, []);
 
   return (

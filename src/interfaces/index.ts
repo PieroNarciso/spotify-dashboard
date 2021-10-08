@@ -112,3 +112,17 @@ export interface Followers {
     href:  null;
     total: number;
 }
+
+export interface UserProfile {
+    country:       string;
+    display_name:  string;
+    email:         string;
+    external_urls: ExternalUrls;
+    followers:     Followers;
+    href:          string;
+    id:            string;
+    images:        Image[];
+    product:       string;
+    type:          string;
+    uri:           string;
+}
