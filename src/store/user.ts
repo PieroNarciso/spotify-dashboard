@@ -13,7 +13,7 @@ const initialState: UserState = {
   authenticated: false,
   accessToken: '',
   firstTime: true,
-}
+};
 
 const userSlice = createSlice({
   name: 'user',
@@ -29,13 +29,16 @@ const userSlice = createSlice({
     },
     toogleFirstTime(state) {
       state.firstTime = false;
-    }
+    },
   },
   extraReducers: (builder) => {
-    builder.addCase(getUserProfile.fulfilled, (state, action: PayloadAction<UserProfile>) => {
-      state.profile = action.payload;
-    });
-  }
+    builder.addCase(
+      getUserProfile.fulfilled,
+      (state, action: PayloadAction<UserProfile>) => {
+        state.profile = action.payload;
+      }
+    );
+  },
 });
 
 export const userActions = userSlice.actions;
