@@ -22,7 +22,7 @@ const Search: React.FC = () => {
           className="input input-primary flex-grow"
           value={text}
           onChange={(e) => setText(e.target.value)}
-          placeholder="Search"
+          placeholder="Search by track"
           type="text"
         />
         <button type="submit" className="btn btn-primary ml-2 flex-grow-0">
