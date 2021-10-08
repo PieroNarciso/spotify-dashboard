@@ -7,13 +7,13 @@ const Layout: React.FC = ({ children }) => {
   const profile = useAppSelector((state) => state.user.profile);
 
   return (
-    <div className={`${isAuthenticated ? 'flex bg-base-200' : ''}`}>
+    <div className={` ${isAuthenticated ? 'flex bg-base-200' : ''}`}>
       {isAuthenticated && (
         <div className="shadow-2xl bg-base-100">
           <SideBar />
         </div>
       )}
-      <div className="min-h-screen">
+      <div className="min-h-screen w-full">
         {profile && (
           <div className="flex justify-end items-center px-3 py-2">
             <span className="tracking-wide cursor-default text-primary-content font-medium">
