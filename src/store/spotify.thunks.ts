@@ -28,20 +28,23 @@ export const getUserTopArtitsTopTracks = createAsyncThunk<
       Authorization: `Bearer ${state.user.accessToken}`,
     },
   });
-  const tracks: Track[] = [];
-  for (const artist of response.data.items) {
-    const response = await api.get<{ tracks: Track[] }>(
-      `/artists/${artist.id}/top-tracks`,
-      {
-        headers: {
-          Authorization: `Bearer ${state.user.accessToken}`,
-        },
-        params: {
-          market: 'US',
-        },
-      }
-    );
-    tracks.push(response.data.tracks[0]);
-  }
+
+  let tracks: Track[] = [];
+  await Promise.all(
+    response.data.items.map(async (artist) => {
+      const response = await api.get<{ tracks: Track[] }>(
+        `/artists/${artist.id}/top-tracks`,
+        {
+          headers: {
+            Authorization: `Bearer ${state.user.accessToken}`,
+          },
+          params: {
+            country: 'US',
+          },
+        }
+      );
+      tracks.push(response.data.tracks[0]);
+    })
+  );
   return tracks;
 });
