@@ -1,5 +1,5 @@
 import { useAppDispatch } from '@/hooks';
-import React from 'react';
+import React, { useState } from 'react';
 import {
   MdLogout,
   MdModeStandby,
@@ -11,6 +11,7 @@ import {
 import NavBtn from '../NavBtn';
 import { userActions } from '@/store/user';
 import { useHistory } from 'react-router-dom';
+import ThemeMenu from '../ThemeMenu';
 
 interface SideBarProps {
   className?: string;
@@ -19,10 +20,13 @@ interface SideBarProps {
 const SideBar: React.FC<SideBarProps> = ({ className }) => {
   const dispatch = useAppDispatch();
   const history = useHistory();
+  const [menuIsOpen, setMenuIsOpen] = useState(false);
   const logoutHandler = () => {
     dispatch(userActions.logout());
     history.push('/login');
   };
+
+  const menuToggle = () => setMenuIsOpen(!menuIsOpen);
 
   return (
     <div
@@ -32,10 +36,15 @@ const SideBar: React.FC<SideBarProps> = ({ className }) => {
     >
       <div className="flex flex-col items-center justify-between fixed h-screen py-2">
         {/* ThemeChanger */}
-        <div>
-          <button className="btn btn-sm btn-circle">
+        <div className="relative">
+          <button className="btn btn-sm btn-circle" onClick={menuToggle}>
             <MdModeStandby className="w-5 h-5" />
           </button>
+          {menuIsOpen && (
+            <div className="origin-top-left absolute left-1 mt-1">
+              <ThemeMenu onClose={menuToggle}/>
+            </div>
+          )}
         </div>
         {/* Navegation */}
         <div className="flex flex-col gap-y-3">
