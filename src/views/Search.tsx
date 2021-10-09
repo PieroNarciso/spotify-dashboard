@@ -8,12 +8,14 @@ import { MdSearch } from 'react-icons/md';
 const Search: React.FC = () => {
   const dispatch = useAppDispatch();
   const [text, setText] = useState('');
-  const recommendedTracks = useAppSelector(state => state.spotify.recommendedTracks);
+  const recommendedTracks = useAppSelector(
+    (state) => state.spotify.recommendedTracks
+  );
 
   const submitHandler = async (event: React.FormEvent) => {
     event.preventDefault();
     dispatch(getRecommendations(text));
-  }
+  };
 
   return (
     <div className="flex flex-col gap-y-4">
@@ -30,9 +32,10 @@ const Search: React.FC = () => {
         </button>
       </form>
       <TrackItemsGrid>
-      {recommendedTracks.map(track => (
-        <TrackItem key={track.id} track={track} />
-      ))}
+        {recommendedTracks.map(
+          (track) =>
+            track.preview_url && <TrackItem className="hover:shadow-lg" key={track.id} track={track} />
+        )}
       </TrackItemsGrid>
     </div>
   );
