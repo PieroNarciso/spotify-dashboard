@@ -3,6 +3,8 @@ import { Artist, Track } from '@/interfaces';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { RootState } from './';
 
+const SONGS_LIMIT = 40;
+
 export const getUserTopTracks = createAsyncThunk<
   Track[],
   void,
@@ -13,6 +15,7 @@ export const getUserTopTracks = createAsyncThunk<
     headers: {
       Authorization: `Bearer ${state.user.accessToken}`,
     },
+    params: { limit: SONGS_LIMIT }
   });
   return response.data.items;
 });
@@ -27,6 +30,7 @@ export const getUserTopArtitsTopTracks = createAsyncThunk<
     headers: {
       Authorization: `Bearer ${state.user.accessToken}`,
     },
+    params: { limit: SONGS_LIMIT }
   });
 
   let tracks: Track[] = [];
@@ -40,6 +44,7 @@ export const getUserTopArtitsTopTracks = createAsyncThunk<
           },
           params: {
             country: 'US',
+            limit: 1,
           },
         }
       );
@@ -75,6 +80,7 @@ export const getRecommendations = createAsyncThunk<
     params: {
       seed_tracks: responseTrack.data.tracks.items[0].id,
       min_popularity: 50,
+      limit: 50,
     },
   });
   return response.data.tracks;
