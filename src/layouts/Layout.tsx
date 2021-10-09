@@ -21,7 +21,7 @@ const Layout: React.FC = ({ children }) => {
             </span>
             <div className="avatar ml-2">
               <div className="rounded-full w-7 h-7">
-                <img src={profile.images[0].url} />
+                <img src={profile.images[0].url} alt={profile.display_name}/>
               </div>
             </div>
           </div>
