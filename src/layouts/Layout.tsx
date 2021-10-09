@@ -16,7 +16,7 @@ const Layout: React.FC = ({ children }) => {
       <div className="min-h-screen w-full">
         {isAuthenticated && profile && (
           <div className="flex justify-end items-center px-3 py-2">
-            <span className="tracking-wide cursor-default text-primary-content font-medium">
+            <span className="tracking-wide cursor-default font-medium">
               {profile.display_name}
             </span>
             <div className="avatar ml-2">
