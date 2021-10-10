@@ -1,14 +1,56 @@
 import React from 'react';
-import { Link, LinkProps } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
-const NavBtn: React.FC<LinkProps> = ({ children, ...props }) => {
+interface LinkWrapperProps {
+  to?: string;
+  activeClassName?: string;
+  className?: string;
+  onClick?: () => void;
+}
+
+const LinkWrapper: React.FC<LinkWrapperProps> = (props) => {
+  if (props.to)
+    return (
+      <NavLink
+        exact
+        activeClassName={props.activeClassName}
+        className={props.className}
+        to={props.to}
+        onClick={props.onClick}
+      >
+        {props.children}
+      </NavLink>
+    );
+  else
+    return (
+      <div className={props.className} onClick={props.onClick}>
+        {props.children}
+      </div>
+    );
+};
+
+interface NavBtn {
+  to?: string;
+  onClick?: () => void;
+  label: string;
+  className?: string;
+}
+
+const NavBtn: React.FC<NavBtn> = (props) => {
+  console.log(props.className);
+
   return (
-    <Link
-      {...props}
-      className="btn btn-sm btn-circle bg-primary hover:bg-primary-focus"
+    <LinkWrapper
+      to={props.to}
+      onClick={props.onClick}
+      activeClassName={props.to ? 'bg-base-300' : ''}
+      className={`flex items-center justify-center cursor-pointer hover:opacity-75 rounded px-1 py-1 ${
+        props.className ? props.className : ''
+      }`}
     >
-      {children}
-    </Link>
+      {props.children}
+      <span className="hidden ml-2 lg:block">{props.label}</span>
+    </LinkWrapper>
   );
 };
 

@@ -19,9 +19,9 @@ const Search: React.FC = () => {
 
   return (
     <div className="flex flex-col gap-y-4">
-      <form className="flex" onSubmit={submitHandler}>
+      <form className="flex justify-center" onSubmit={submitHandler}>
         <input
-          className="input input-primary flex-grow"
+          className="input input-primary flex-grow max-w-lg"
           value={text}
           onChange={(e) => setText(e.target.value)}
           placeholder="Search by track"
@@ -34,7 +34,7 @@ const Search: React.FC = () => {
       <TrackItemsGrid>
         {recommendedTracks.map(
           (track) =>
-            track.preview_url && <TrackItem className="hover:shadow-lg" key={track.id} track={track} />
+            track.preview_url && <TrackItem key={track.id} track={track} />
         )}
       </TrackItemsGrid>
     </div>

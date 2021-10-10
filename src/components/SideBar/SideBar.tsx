@@ -26,44 +26,53 @@ const SideBar: React.FC<SideBarProps> = ({ className }) => {
     history.push('/login');
   };
 
-  const menuToggle = () => setMenuIsOpen(!menuIsOpen);
+  const menuToggle = () => {
+    console.log('jsdlf');
+    setMenuIsOpen(!menuIsOpen);
+  }
 
   return (
     <div
-      className={`flex justify-center h-full w-10 ${
+      className={`flex justify-center h-full w-10 lg:w-28 ${
         className ? className : ''
       }`}
     >
       <div className="flex flex-col items-center justify-between fixed h-screen py-2">
         {/* ThemeChanger */}
-        <div className="relative">
-          <button className="btn btn-sm btn-circle" onClick={menuToggle}>
+        <NavBtn label="Theme" onClick={menuToggle} className="relative">
+          <button className="btn btn-sm btn-circle">
             <MdModeStandby className="w-5 h-5" />
           </button>
           {menuIsOpen && (
-            <div className="origin-top-left absolute left-1 mt-1">
-              <ThemeMenu onClose={menuToggle}/>
+            <div className="origin-top-left absolute top-10 left-2">
+              <ThemeMenu onClose={menuToggle} />
             </div>
           )}
-        </div>
+        </NavBtn>
         {/* Navegation */}
         <div className="flex flex-col gap-y-3">
-          <NavBtn to="/">
-            <MdOutlineLibraryMusic className="w-5 h-5" />
+          <NavBtn label="Tracks" to="/">
+            <button className="btn btn-sm btn-circle btn-primary">
+              <MdOutlineLibraryMusic className="w-5 h-5" />
+            </button>
           </NavBtn>
-          <NavBtn to="/artists">
-            <MdStar className="w-5 h-5" />
+          <NavBtn label="Artists" to="/artists">
+            <button className="btn btn-sm btn-circle btn-primary">
+              <MdStar className="w-5 h-5" />
+            </button>
           </NavBtn>
-          <NavBtn to="/search">
-            <MdSearch className="w-5 h-5" />
+          <NavBtn label="Search" to="/search">
+            <button className="btn btn-primary btn-sm btn-circle">
+              <MdSearch className="w-5 h-5" />
+            </button>
           </NavBtn>
         </div>
         {/* Logout */}
-        <div>
-          <button className="btn btn-circle btn-sm" onClick={logoutHandler}>
+        <NavBtn label="Logout" onClick={logoutHandler}>
+          <button className="btn btn-circle btn-sm">
             <MdLogout className="w-5 h-5" />
           </button>
-        </div>
+        </NavBtn>
       </div>
     </div>
   );
