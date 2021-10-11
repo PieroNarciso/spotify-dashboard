@@ -8,13 +8,16 @@ import { MdSearch } from 'react-icons/md';
 const Search: React.FC = () => {
   const dispatch = useAppDispatch();
   const [text, setText] = useState('');
+  const [isLoading, setIsloading] = useState(false);
   const recommendedTracks = useAppSelector(
     (state) => state.spotify.recommendedTracks
   );
 
   const submitHandler = async (event: React.FormEvent) => {
     event.preventDefault();
-    dispatch(getRecommendations(text));
+    setIsloading(true);
+    await dispatch(getRecommendations(text)).unwrap();
+    setIsloading(false);
   };
 
   return (
@@ -27,8 +30,13 @@ const Search: React.FC = () => {
           placeholder="Search by track"
           type="text"
         />
-        <button type="submit" className="btn btn-primary ml-2 flex-grow-0">
-          <MdSearch />
+        <button
+          type="submit"
+          className={`btn btn-primary ml-2 flex-grow-0 ${
+            isLoading ? 'loading opacity-75' : ''
+          }`}
+        >
+          {!isLoading && <MdSearch />}
         </button>
       </form>
       <TrackItemsGrid>
