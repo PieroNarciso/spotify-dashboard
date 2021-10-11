@@ -23,7 +23,9 @@ const Login: React.FC = () => {
     <React.Fragment>
       <div className="flex flex-col h-screen w-screen absolute top-0 left-0 items-center justify-center">
         <div>
-          <h1 className="text-xl font-medium tracking-wide">Spotify Dashboard</h1>
+          <h1 className="text-xl font-medium tracking-wide">
+            Spotify Dashboard
+          </h1>
         </div>
         <div className="mt-4">
           <a href={AUTH_LINK} className="btn btn-primary">
@@ -33,10 +35,13 @@ const Login: React.FC = () => {
         </div>
       </div>
       <div className="absolute bottom-0 left-0 w-full flex items-center justify-center p-3">
-        <span className="">
-          Piero Narciso
-        </span>
-        <a className="btn btn-sm btn-circle ml-2">
+        <span className="">Piero Narciso</span>
+        <a
+          className="btn btn-sm btn-circle ml-2"
+          href="https://github.com/PieroNarciso/spotify-dashboard"
+          rel="noreferrer"
+          target="_blank"
+        >
           <BsGithub className="w-5 h-5" />
         </a>
       </div>
