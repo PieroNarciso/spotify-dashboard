@@ -1,4 +1,4 @@
-import { useAudio } from '@/hooks';
+import { useAppSelector, useAudio } from '@/hooks';
 import { Track } from '@/interfaces';
 import React from 'react';
 
@@ -8,7 +8,12 @@ interface TrackItemProps {
 }
 
 const TrackItem: React.FC<TrackItemProps> = ({ className, ...props }) => {
-  const { play, pause } = useAudio(props.track.preview_url || '', 0.5);
+  const volume = useAppSelector((state) => state.spotify.volume);
+  const percentVolumen = volume / 100;
+  const { play, pause } = useAudio(
+    props.track.preview_url || '',
+    percentVolumen
+  );
   return (
     <div
       onMouseEnter={play}

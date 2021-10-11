@@ -10,18 +10,24 @@ interface SpotifyState {
   tracks: Track[];
   artistsTopTracks: Track[];
   recommendedTracks: Track[];
+  volume: number;
 }
 
 const initialState: SpotifyState = {
   tracks: [],
   artistsTopTracks: [],
   recommendedTracks: [],
+  volume: 80,
 };
 
 const spotifySlice = createSlice({
   name: 'spotify',
   initialState,
-  reducers: {},
+  reducers: {
+    changeVolume(state, action: PayloadAction<number>) {
+      state.volume = action.payload;
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(

@@ -16,8 +16,11 @@ const Search: React.FC = () => {
   const submitHandler = async (event: React.FormEvent) => {
     event.preventDefault();
     setIsloading(true);
-    await dispatch(getRecommendations(text)).unwrap();
-    setIsloading(false);
+    try {
+      await dispatch(getRecommendations(text)).unwrap();
+    } finally {
+      setIsloading(false);
+    }
   };
 
   return (

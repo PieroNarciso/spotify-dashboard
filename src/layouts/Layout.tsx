@@ -1,4 +1,5 @@
 import SideBar from '@/components/SideBar/SideBar';
+import VolumeSwitcher from '@/components/VolumeSwitcher';
 import { useAppSelector } from '@/hooks';
 import React from 'react';
 
