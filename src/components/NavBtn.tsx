@@ -37,8 +37,6 @@ interface NavBtn {
 }
 
 const NavBtn: React.FC<NavBtn> = (props) => {
-  console.log(props.className);
-
   return (
     <LinkWrapper
       to={props.to}
