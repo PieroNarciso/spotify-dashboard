@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   BrowserRouter as Router,
   Redirect,
@@ -16,6 +16,13 @@ import Search from './views/Search';
 
 const App: React.FC = () => {
   const isAuthenticated = useAppSelector((state) => state.user.authenticated);
+
+  useEffect(() => {
+    const theme = localStorage.getItem('theme');
+    if (theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+    }
+  }, [])
 
   return (
     <Router>
