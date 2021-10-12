@@ -1,5 +1,4 @@
 import SideBar from '@/components/SideBar/SideBar';
-import VolumeSwitcher from '@/components/VolumeSwitcher';
 import { useAppSelector } from '@/hooks';
 import React from 'react';
 
@@ -20,11 +19,16 @@ const Layout: React.FC = ({ children }) => {
             <span className="tracking-wide cursor-default font-medium">
               {profile.display_name}
             </span>
-            <div className="avatar ml-2">
-              <div className="rounded-full w-7 h-7">
-                <img src={profile.images[0].url} alt={profile.display_name}/>
+            {profile.images.length > 0 ? (
+              <div className="avatar ml-2">
+                <div className="rounded-full w-7 h-7">
+                  <img
+                    src={profile.images[0]?.url}
+                    alt={profile.display_name}
+                  />
+                </div>
               </div>
-            </div>
+            ) : null}
           </div>
         )}
         <div className="px-4 py-4">{children}</div>
