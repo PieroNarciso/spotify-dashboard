@@ -40,14 +40,13 @@ const NavBtn: React.FC<NavBtn> = (props) => {
   return (
     <LinkWrapper
       to={props.to}
-      onClick={props.onClick}
       activeClassName={props.to ? 'bg-base-200' : ''}
       className={`flex items-center justify-center cursor-pointer hover:opacity-75 rounded px-1 py-1 ${
         props.className ? props.className : ''
       }`}
     >
       {props.children}
-      <span className="hidden ml-2 lg:block">{props.label}</span>
+      <span onClick={props.onClick} className="hidden ml-2 lg:block">{props.label}</span>
     </LinkWrapper>
   );
 };

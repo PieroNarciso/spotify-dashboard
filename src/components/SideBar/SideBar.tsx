@@ -23,7 +23,7 @@ const SideBar: React.FC<SideBarProps> = ({ className }) => {
   const dispatch = useAppDispatch();
   const history = useHistory();
   const [menuIsOpen, setMenuIsOpen] = useState(false);
-  const [volIsOpen, setVolIsOpen] = useState(true);
+  const [volIsOpen, setVolIsOpen] = useState(false);
   const logoutHandler = () => {
     dispatch(userActions.logout());
     history.push('/login');
@@ -32,7 +32,9 @@ const SideBar: React.FC<SideBarProps> = ({ className }) => {
   const menuToggle = () => {
     setMenuIsOpen(!menuIsOpen);
   };
-  const volSwitcherToggle = () => setVolIsOpen(!volIsOpen);
+  const volSwitcherToggle = () => {
+    setVolIsOpen((prev) => !prev);
+  }
 
   return (
     <div
@@ -48,25 +50,25 @@ const SideBar: React.FC<SideBarProps> = ({ className }) => {
             onClick={menuToggle}
             className="relative hover:opacity-100"
           >
-            <button className="btn btn-sm btn-circle">
+            <button className="btn btn-sm btn-circle" onClick={menuToggle}>
               <MdModeStandby className="w-5 h-5" />
             </button>
             {menuIsOpen && (
-              <div className="origin-top-left absolute top-10 left-2">
-                <ThemeMenu onClose={menuToggle} />
+              <div className="origin-top-left absolute top-10 left-2 z-30">
+                <ThemeMenu />
               </div>
             )}
           </NavBtn>
-          <NavBtn label="Volume" onClick={volSwitcherToggle} className="relative hover:opacity-100">
+          {/* Volume Control */}
+          <NavBtn label="Volume" onClick={volSwitcherToggle}  className="relative hover:opacity-100">
             <button
+              onClick={volSwitcherToggle}
               className="btn btn-sm btn-circle"
             >
               <MdVolumeUp />
             </button>
             {volIsOpen && (
-              <div className="bg-base-200 rounded-md py-1 px-1 absolute origin-top-left left-11 lg:left-28 w-60 shadow-lg">
-                <VolumeSwitcher onClose={volSwitcherToggle} />
-              </div>
+              <VolumeSwitcher className="absolute origin-top-left left-11 lg:left-28 w-60" />
             )}
           </NavBtn>
         </div>

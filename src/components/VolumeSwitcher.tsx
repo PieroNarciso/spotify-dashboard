@@ -1,9 +1,10 @@
 import { useAppDispatch, useAppSelector } from '@/hooks';
 import { spotifyActions } from '@/store/spotify';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { MdVolumeDown, MdVolumeMute, MdVolumeOff, MdVolumeUp } from 'react-icons/md';
 
 interface VolumeSwitcherProps {
-  onClose: () => void;
+  className?: string;
 }
 
 const VolumeSwitcher: React.FC<VolumeSwitcherProps> = (props) => {
@@ -13,21 +14,6 @@ const VolumeSwitcher: React.FC<VolumeSwitcherProps> = (props) => {
   const switchHandler = (event: React.ChangeEvent<HTMLInputElement>) =>
     setSwitchValue(parseInt(event.target.value));
 
-
-  const switcherRef = useRef<HTMLInputElement>(null);
-  const handleClickOutside = (event: MouseEvent) => {
-    if (!switcherRef.current?.contains(event.target as Node)) {
-      props.onClose();
-    }
-  }
-
-  useEffect(() => {
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    }
-  }, [])
-
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       dispatch(spotifyActions.changeVolume(switchValue));
@@ -35,17 +21,29 @@ const VolumeSwitcher: React.FC<VolumeSwitcherProps> = (props) => {
     return () => clearTimeout(timeoutId);
   }, [switchValue]);
 
+  const iconClasses = 'w-6 h-6 ml-2 text-primary-focus'
+  let iconWidget = <MdVolumeUp className={iconClasses} />
+  if (volume === 0) iconWidget = <MdVolumeOff className={iconClasses} />
+  else if (volume <= 15) iconWidget = <MdVolumeMute className={iconClasses} />
+  else if (volume <= 65) iconWidget = <MdVolumeDown className={iconClasses} />
+
   return (
-    <input
-      type="range"
-      min={0}
-      max={100}
-      step={5}
-      className="range range-primary"
-      value={switchValue}
-      onChange={switchHandler}
-      ref={switcherRef}
-    />
+    <div
+      className={`bg-base-200 flex items-center rounded-md py-1 px-1 shadow-lg ${
+        props.className ? props.className : ''
+      }`}
+    >
+      <input
+        type="range"
+        min={0}
+        max={100}
+        step={5}
+        className="range range-primary"
+        value={switchValue}
+        onChange={switchHandler}
+      />
+      {iconWidget}
+    </div>
   );
 };
 
