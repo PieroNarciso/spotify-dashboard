@@ -3,6 +3,7 @@ import React from 'react';
 const ThemeMenu: React.FC = () => {
   const themeChanger = (theme: string) => {
     document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
   }
 
   return (
