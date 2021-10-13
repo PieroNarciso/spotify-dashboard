@@ -5,7 +5,7 @@ export interface Album {
     copyrights:             Copyright[];
     external_ids:           AlbumExternalIDS;
     external_urls:          ExternalUrls;
-    genres:                 any[];
+    genres:                 string[];
     href:                   string;
     id:                     string;
     images:                 Image[];

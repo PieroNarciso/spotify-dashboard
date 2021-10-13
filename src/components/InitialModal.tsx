@@ -10,8 +10,8 @@ const InitialModal: React.FC = () => {
 
   const closeModal = () => {
     setIsOpen(false);
-    dispatch(userActions.toogleFirstTime())
-  }
+    dispatch(userActions.toogleFirstTime());
+  };
 
   return (
     <>
@@ -21,7 +21,7 @@ const InitialModal: React.FC = () => {
         </ModalActions>
       </Modal>
     </>
-  )
+  );
 };
 
 export default InitialModal;

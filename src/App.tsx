@@ -22,7 +22,7 @@ const App: React.FC = () => {
     if (theme) {
       document.documentElement.setAttribute('data-theme', theme);
     }
-  }, [])
+  }, []);
 
   return (
     <Router>

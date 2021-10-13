@@ -21,11 +21,11 @@ const VolumeSwitcher: React.FC<VolumeSwitcherProps> = (props) => {
     return () => clearTimeout(timeoutId);
   }, [switchValue]);
 
-  const iconClasses = 'w-6 h-6 ml-2 text-primary-focus'
-  let iconWidget = <MdVolumeUp className={iconClasses} />
-  if (volume === 0) iconWidget = <MdVolumeOff className={iconClasses} />
-  else if (volume <= 15) iconWidget = <MdVolumeMute className={iconClasses} />
-  else if (volume <= 65) iconWidget = <MdVolumeDown className={iconClasses} />
+  const iconClasses = 'w-6 h-6 ml-2 text-primary-focus';
+  let iconWidget = <MdVolumeUp className={iconClasses} />;
+  if (volume === 0) iconWidget = <MdVolumeOff className={iconClasses} />;
+  else if (volume <= 15) iconWidget = <MdVolumeMute className={iconClasses} />;
+  else if (volume <= 65) iconWidget = <MdVolumeDown className={iconClasses} />;
 
   return (
     <div

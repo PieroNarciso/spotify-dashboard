@@ -4,7 +4,7 @@ const ThemeMenu: React.FC = () => {
   const themeChanger = (theme: string) => {
     document.documentElement.setAttribute('data-theme', theme);
     localStorage.setItem('theme', theme);
-  }
+  };
 
   return (
     <ul className="menu shadow-lg rounded-box bg-base-200 py-2">
