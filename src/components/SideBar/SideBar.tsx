@@ -1,5 +1,5 @@
 import { useAppDispatch } from '@/hooks';
-import React, { useState } from 'react';
+import React from 'react';
 import {
   MdLogout,
   MdModeStandby,
@@ -14,6 +14,9 @@ import { userActions } from '@/store/user';
 import { useHistory } from 'react-router-dom';
 import ThemeMenu from '../ThemeMenu';
 import VolumeSwitcher from '../VolumeSwitcher';
+import Menu from '../Menu/Menu';
+import MenuButton from '../Menu/MenuButton';
+import MenuContainer from '../Menu/MenuContainer';
 
 interface SideBarProps {
   className?: string;
@@ -22,18 +25,9 @@ interface SideBarProps {
 const SideBar: React.FC<SideBarProps> = ({ className }) => {
   const dispatch = useAppDispatch();
   const history = useHistory();
-  const [menuIsOpen, setMenuIsOpen] = useState(false);
-  const [volIsOpen, setVolIsOpen] = useState(false);
   const logoutHandler = () => {
     dispatch(userActions.logout());
     history.push('/login');
-  };
-
-  const menuToggle = () => {
-    setMenuIsOpen(!menuIsOpen);
-  };
-  const volSwitcherToggle = () => {
-    setVolIsOpen((prev) => !prev);
   };
 
   return (
@@ -45,32 +39,30 @@ const SideBar: React.FC<SideBarProps> = ({ className }) => {
       <div className="flex flex-col items-center justify-between fixed h-screen py-2">
         {/* ThemeChanger */}
         <div className="flex flex-col items-center lg:items-start">
-          <NavBtn
-            label="Theme"
-            onClick={menuToggle}
-            className="relative hover:opacity-100"
-          >
-            <button className="btn btn-sm btn-circle" onClick={menuToggle}>
-              <MdModeStandby className="w-5 h-5" />
-            </button>
-            {menuIsOpen && (
-              <div className="origin-top-left absolute top-10 left-2 z-30">
+          <Menu>
+            <MenuButton className="flex items-center px-1 py-1 hover:opacity-75">
+              <span className="btn btn-circle btn-sm">
+                <MdModeStandby className="w-5 h-5" />
+              </span>
+              <span className="ml-2 hidden lg:block">Theme</span>
+            </MenuButton>
+            <MenuContainer>
+              <div className="origin-top-left absolute top-2 left-11 lg:left-28 z-30">
                 <ThemeMenu />
               </div>
-            )}
-          </NavBtn>
-          {/* Volume Control */}
-          <NavBtn label="Volume" onClick={volSwitcherToggle}  className="relative hover:opacity-100">
-            <button
-              onClick={volSwitcherToggle}
-              className="btn btn-sm btn-circle"
-            >
-              <MdVolumeUp />
-            </button>
-            {volIsOpen && (
-              <VolumeSwitcher className="absolute origin-top-left left-11 lg:left-28 w-60" />
-            )}
-          </NavBtn>
+            </MenuContainer>
+          </Menu>
+          <Menu className="relative">
+            <MenuButton className="flex items-center px-1 py-1 hover:opacity-75">
+              <span className="btn btn-sm btn-circle">
+                <MdVolumeUp />
+              </span>
+              <span className="ml-2 hidden lg:block">Volume</span>
+            </MenuButton>
+            <MenuContainer>
+              <VolumeSwitcher className="absolute origin-top-top left-11 lg:left-28 top-1 w-60" />
+            </MenuContainer>
+          </Menu>
         </div>
         {/* Navegation */}
         <div className="flex flex-col gap-y-3">
