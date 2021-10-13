@@ -11,7 +11,7 @@ const Artist: React.FC = () => {
 
   useEffect(() => {
     if (tracks.length === 0)
-        dispatch(getUserTopArtitsTopTracks());
+      dispatch(getUserTopArtitsTopTracks());
   }, []);
 
   return (
@@ -20,7 +20,7 @@ const Artist: React.FC = () => {
         <TrackItem key={track.id} track={track} />
       ))}
     </TrackItemsGrid>
-  )
+  );
 };
 
 export default Artist;

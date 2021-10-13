@@ -6,7 +6,7 @@ const ModalContent: React.FC = (props) => {
     <>
       {props.children}
     </>
-  )
+  );
 };
 
 export default ModalContent;

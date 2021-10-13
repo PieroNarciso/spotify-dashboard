@@ -33,7 +33,7 @@ export const getUserTopArtitsTopTracks = createAsyncThunk<
     params: { limit: SONGS_LIMIT }
   });
 
-  let tracks: Track[] = [];
+  const tracks: Track[] = [];
   await Promise.all(
     response.data.items.map(async (artist) => {
       const response = await api.get<{ tracks: Track[] }>(

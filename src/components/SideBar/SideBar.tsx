@@ -34,7 +34,7 @@ const SideBar: React.FC<SideBarProps> = ({ className }) => {
   };
   const volSwitcherToggle = () => {
     setVolIsOpen((prev) => !prev);
-  }
+  };
 
   return (
     <div
