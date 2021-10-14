@@ -41,6 +41,7 @@ const NavBtn: React.FC<NavBtn> = (props) => {
     <LinkWrapper
       to={props.to}
       activeClassName={props.to ? 'bg-base-200' : ''}
+      onClick={props.onClick}
       className={`flex items-center justify-center cursor-pointer hover:opacity-75 rounded px-1 py-1 ${
         props.className ? props.className : ''
       }`}
