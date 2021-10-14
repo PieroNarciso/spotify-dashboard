@@ -17,6 +17,7 @@ const VolumeSwitcher: React.FC<VolumeSwitcherProps> = (props) => {
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       dispatch(spotifyActions.changeVolume(switchValue));
+      localStorage.setItem('volume', switchValue.toString());
     }, 150);
     return () => clearTimeout(timeoutId);
   }, [switchValue]);
