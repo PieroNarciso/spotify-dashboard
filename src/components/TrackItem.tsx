@@ -31,4 +31,4 @@ const TrackItem: React.FC<TrackItemProps> = ({ className, ...props }) => {
   );
 };
 
-export default TrackItem;
+export default React.memo(TrackItem);
