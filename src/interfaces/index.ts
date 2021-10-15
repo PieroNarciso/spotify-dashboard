@@ -74,6 +74,7 @@ export interface Track {
     external_ids?:     TrackExternalIDS;
     is_local?:         boolean;
     popularity?:       number;
+    saved?:            boolean;
 }
 
 export interface AlbumClass {
