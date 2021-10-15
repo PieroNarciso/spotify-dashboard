@@ -1,6 +1,7 @@
 import TrackItem from '@/components/TrackItem';
 import TrackItemsGrid from '@/components/TrackItemsGrid';
 import { useAppDispatch, useAppSelector } from '@/hooks';
+import { selectAllRecommendedTracks } from '@/store/spotify';
 import { getRecommendations } from '@/store/spotify.thunks';
 import React, { useState } from 'react';
 import { MdSearch } from 'react-icons/md';
@@ -9,9 +10,7 @@ const Search: React.FC = () => {
   const dispatch = useAppDispatch();
   const [text, setText] = useState('');
   const [isLoading, setIsloading] = useState(false);
-  const recommendedTracks = useAppSelector(
-    (state) => state.spotify.recommendedTracks
-  );
+  const recommendedTracks = useAppSelector(selectAllRecommendedTracks);
 
   const submitHandler = async (event: React.FormEvent) => {
     event.preventDefault();
