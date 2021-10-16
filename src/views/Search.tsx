@@ -2,7 +2,7 @@ import TrackItem from '@/components/TrackItem';
 import TrackItemsGrid from '@/components/TrackItemsGrid';
 import { useAppDispatch, useAppSelector } from '@/hooks';
 import { selectAllRecommendedTracks } from '@/store/spotify';
-import { getRecommendations } from '@/store/spotify.thunks';
+import { getRecommendations, getSavedTracks } from '@/store/spotify.thunks';
 import React, { useState } from 'react';
 import { MdSearch } from 'react-icons/md';
 
@@ -17,6 +17,7 @@ const Search: React.FC = () => {
     setIsloading(true);
     try {
       await dispatch(getRecommendations(text)).unwrap();
+      await dispatch(getSavedTracks()).unwrap();
     } finally {
       setIsloading(false);
     }
