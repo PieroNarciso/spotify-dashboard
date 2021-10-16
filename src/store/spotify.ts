@@ -56,6 +56,7 @@ const spotifySlice = createSlice({
       .addCase(
         getRecommendations.fulfilled,
         (state, action: PayloadAction<Track[]>) => {
+          recommendedTracksAdapter.removeAll(state.recommendedTracks);
           recommendedTracksAdapter.upsertMany(
             state.recommendedTracks,
             action.payload
