@@ -3,12 +3,15 @@ import {
   createSlice,
   EntityState,
   PayloadAction,
+  Update,
 } from '@reduxjs/toolkit';
 import { Track } from '@/interfaces';
 import {
   getRecommendations,
+  getSavedTracks,
   getUserTopArtitsTopTracks,
   getUserTopTracks,
+  saveTrack,
 } from './spotify.thunks';
 import { RootState } from '@/store';
 
@@ -54,6 +57,24 @@ const spotifySlice = createSlice({
         getRecommendations.fulfilled,
         (state, action: PayloadAction<Track[]>) => {
           recommendedTracksAdapter.upsertMany(
+            state.recommendedTracks,
+            action.payload
+          );
+        }
+      )
+      .addCase(
+        getSavedTracks.fulfilled,
+        (state, action: PayloadAction<Update<Track>[]>) => {
+          recommendedTracksAdapter.updateMany(
+            state.recommendedTracks,
+            action.payload
+          );
+        }
+      )
+      .addCase(
+        saveTrack.fulfilled,
+        (state, action: PayloadAction<Update<Track>>) => {
+          recommendedTracksAdapter.updateOne(
             state.recommendedTracks,
             action.payload
           );
