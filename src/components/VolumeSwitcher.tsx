@@ -30,7 +30,7 @@ const VolumeSwitcher: React.FC<VolumeSwitcherProps> = (props) => {
 
   return (
     <div
-      className={`bg-base-200 flex items-center rounded-md py-1 px-1 shadow-lg ${
+      className={`flex items-center rounded-md py-1 px-1 ${
         props.className ? props.className : ''
       }`}
     >
