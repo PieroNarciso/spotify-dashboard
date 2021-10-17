@@ -45,7 +45,7 @@ const Search: React.FC = () => {
       <TrackItemsGrid>
         {recommendedTracks.map(
           (track) =>
-            track.preview_url && <TrackItem key={track.id} track={track} />
+            track.preview_url && <TrackItem key={track.id} track={track} controls/>
         )}
       </TrackItemsGrid>
     </div>
