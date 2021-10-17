@@ -11,7 +11,7 @@ interface SettingsButtonProps {
 }
 
 const SettingsButton: React.FC<SettingsButtonProps> = (props) => {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
   const onClose = () => setIsOpen(false);
   const onOpen = () => setIsOpen(true);
