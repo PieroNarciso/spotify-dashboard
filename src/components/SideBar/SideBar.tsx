@@ -2,21 +2,16 @@ import { useAppDispatch } from '@/hooks';
 import React from 'react';
 import {
   MdLogout,
-  MdModeStandby,
   MdOutlineLibraryMusic,
   MdSearch,
+  MdSettings,
   MdStar,
-  MdVolumeUp,
 } from 'react-icons/md';
 
 import NavBtn from '../NavBtn';
 import { userActions } from '@/store/user';
 import { useHistory } from 'react-router-dom';
-import ThemeMenu from '../ThemeMenu';
-import VolumeSwitcher from '../VolumeSwitcher';
-import Menu from '../Menu/Menu';
-import MenuButton from '../Menu/MenuButton';
-import MenuContainer from '../Menu/MenuContainer';
+import SettingsButton from '../SettingsButton';
 
 interface SideBarProps {
   className?: string;
@@ -37,32 +32,14 @@ const SideBar: React.FC<SideBarProps> = ({ className }) => {
       }`}
     >
       <div className="flex flex-col items-center justify-between fixed h-screen py-2">
-        {/* ThemeChanger */}
+        {/* SettingsMenu */}
         <div className="flex flex-col items-center lg:items-start">
-          <Menu>
-            <MenuButton className="flex items-center px-1 py-1 hover:opacity-75">
-              <span className="btn btn-circle btn-sm">
-                <MdModeStandby className="w-5 h-5" />
-              </span>
-              <span className="ml-2 hidden lg:block">Theme</span>
-            </MenuButton>
-            <MenuContainer>
-              <div className="origin-top-left absolute top-2 left-11 lg:left-28 z-30">
-                <ThemeMenu />
-              </div>
-            </MenuContainer>
-          </Menu>
-          <Menu className="relative">
-            <MenuButton className="flex items-center px-1 py-1 hover:opacity-75">
-              <span className="btn btn-sm btn-circle">
-                <MdVolumeUp />
-              </span>
-              <span className="ml-2 hidden lg:block">Volume</span>
-            </MenuButton>
-            <MenuContainer>
-              <VolumeSwitcher className="absolute origin-top-top left-11 lg:left-28 top-1 w-60" />
-            </MenuContainer>
-          </Menu>
+          <SettingsButton className="flex items-center px-1 py-1 hover:opacity-75">
+            <span className="btn btn-circle btn-sm">
+              <MdSettings className="w-5 h-5" />
+            </span>
+            <span className="ml-2 hidden lg:block">Settings</span>
+          </SettingsButton>
         </div>
         {/* Navegation */}
         <div className="flex flex-col gap-y-3">
