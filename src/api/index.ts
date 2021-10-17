@@ -5,7 +5,12 @@ const urlParams = new URLSearchParams({
   response_type: 'token',
   redirect_uri: import.meta.env.VITE_REDIRECT_URL as string,
   state: '988',
-  scope: ['user-read-private', 'user-top-read'].join(' '),
+  scope: [
+    'user-read-private',
+    'user-top-read',
+    'user-library-modify',
+    'user-library-read',
+  ].join(' '),
 }).toString();
 
 export const AUTH_LINK = `https://accounts.spotify.com/authorize?${urlParams}`;

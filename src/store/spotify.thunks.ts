@@ -1,6 +1,6 @@
 import { api } from '@/api';
 import { Artist, Track } from '@/interfaces';
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import { createAsyncThunk, Update } from '@reduxjs/toolkit';
 import { RootState } from './';
 
 const SONGS_LIMIT = 40;
@@ -15,7 +15,7 @@ export const getUserTopTracks = createAsyncThunk<
     headers: {
       Authorization: `Bearer ${state.user.accessToken}`,
     },
-    params: { limit: SONGS_LIMIT }
+    params: { limit: SONGS_LIMIT },
   });
   return response.data.items;
 });
@@ -30,7 +30,7 @@ export const getUserTopArtitsTopTracks = createAsyncThunk<
     headers: {
       Authorization: `Bearer ${state.user.accessToken}`,
     },
-    params: { limit: SONGS_LIMIT }
+    params: { limit: SONGS_LIMIT },
   });
 
   const tracks: Track[] = [];
@@ -84,4 +84,53 @@ export const getRecommendations = createAsyncThunk<
     },
   });
   return response.data.tracks;
+});
+
+export const getSavedTracks = createAsyncThunk<
+  Update<Track>[],
+  void,
+  { state: RootState }
+>('/saved/tracks', async (_, thunkApi) => {
+  const token = thunkApi.getState().user.accessToken;
+  const ids = thunkApi.getState().spotify.recommendedTracks.ids;
+  const response = await api.get<boolean[]>('/me/tracks/contains', {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    params: {
+      ids: ids.join(','),
+    },
+  });
+  const data: Update<Track>[] = [];
+  ids.forEach((id, idx) => {
+    data.push({ id: id, changes: { saved: response.data[idx] } });
+  });
+  return data;
+});
+
+export const saveTrack = createAsyncThunk<
+  Update<Track>,
+  string,
+  { state: RootState }
+>('/track/save', async (id, thunkApi) => {
+  const token = thunkApi.getState().user.accessToken;
+  await api.put(
+    '/me/tracks',
+    { ids: [id] },
+    { headers: { Authorization: `Bearer ${token}` } }
+  );
+  return { id, changes: { saved: true } };
+});
+
+export const removeSavedTrack = createAsyncThunk<
+  Update<Track>,
+  string,
+  { state: RootState }
+>('/track/unsave', async (id, thunkApi) => {
+  const token = thunkApi.getState().user.accessToken;
+  await api.delete('/me/tracks', {
+    headers: { Authorization: `Bearer ${token}` },
+    params: { ids: id },
+  });
+  return { id, changes: { saved: false } };
 });
