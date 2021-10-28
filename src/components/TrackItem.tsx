@@ -3,11 +3,12 @@ import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import { Track } from '@/interfaces';
 import React from 'react';
 import { removeSavedTrack, saveTrack } from '@/store/spotify.thunks';
+import { SpotifyTracksKey } from '@/types';
 
 interface TrackItemProps {
   track: Track;
+  typeKey: SpotifyTracksKey;
   className?: string;
-  controls?: boolean;
 }
 
 const TrackItem: React.FC<TrackItemProps> = ({ className, ...props }) => {
@@ -21,9 +22,13 @@ const TrackItem: React.FC<TrackItemProps> = ({ className, ...props }) => {
 
   const toggleSaveTrack = async () => {
     if (props.track.saved) {
-      await dispatch(removeSavedTrack(props.track.id)).unwrap();
+      await dispatch(
+        removeSavedTrack({ id: props.track.id, key: props.typeKey })
+      ).unwrap();
     } else {
-      await dispatch(saveTrack(props.track.id)).unwrap();
+      await dispatch(
+        saveTrack({ id: props.track.id, key: props.typeKey })
+      ).unwrap();
     }
   };
 
@@ -31,34 +36,32 @@ const TrackItem: React.FC<TrackItemProps> = ({ className, ...props }) => {
     <div
       onMouseEnter={play}
       onMouseLeave={pause}
-      className={`focus:shadow-lg hover:shadow-lg group ${
-        props.controls ? 'relative' : ''
-      } ${className ? className : ''}`}
+      className={`focus:shadow-lg hover:shadow-lg group relative ${
+        className ? className : ''
+      }`}
     >
       <img
         className="w-full h-full"
         src={props.track.album?.images[0].url}
         alt={props.track.name}
       />
-      {props.controls && (
-        <div className="bg-neutral-focus absolute opacity-90 top-0 left-0 w-full h-full hidden group-hover:flex flex-col justify-between p-2">
-          <span className="text-accent font-semibold text-center self-center">
-            {props.track.name}
-          </span>
-          <div className="flex justify-end">
-            <button
-              className="btn btn-circle btn-sm font-semibold"
-              onClick={toggleSaveTrack}
-            >
-              {props.track.saved ? (
-                <AiFillHeart className="text-secondary-focus w-6 h-6" />
-              ) : (
-                <AiOutlineHeart className="text-secondary-focus w-6 h-6" />
-              )}
-            </button>
-          </div>
+      <div className="bg-neutral-focus absolute opacity-90 top-0 left-0 w-full h-full hidden group-hover:flex flex-col justify-between p-2">
+        <span className="text-accent font-semibold text-center self-center">
+          {props.track.name}
+        </span>
+        <div className="flex justify-end">
+          <button
+            className="btn btn-circle btn-sm font-semibold"
+            onClick={toggleSaveTrack}
+          >
+            {props.track.saved ? (
+              <AiFillHeart className="text-secondary-focus w-6 h-6" />
+            ) : (
+              <AiOutlineHeart className="text-secondary-focus w-6 h-6" />
+            )}
+          </button>
         </div>
-      )}
+      </div>
     </div>
   );
 };
