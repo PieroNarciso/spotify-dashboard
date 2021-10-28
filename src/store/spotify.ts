@@ -3,7 +3,6 @@ import {
   createSlice,
   EntityState,
   PayloadAction,
-  Update,
 } from '@reduxjs/toolkit';
 import { Track } from '@/interfaces';
 import {
@@ -11,24 +10,25 @@ import {
   getSavedTracks,
   getUserTopArtitsTopTracks,
   getUserTopTracks,
+  removeSavedTrack,
   saveTrack,
 } from './spotify.thunks';
 import { RootState } from '@/store';
 
-const recommendedTracksAdapter = createEntityAdapter<Track>();
+const tracksAdapter = createEntityAdapter<Track>();
 
-interface SpotifyState {
-  tracks: Track[];
-  artistsTopTracks: Track[];
+export interface SpotifyState {
+  topTracks: EntityState<Track>;
+  artistsTopTracks: EntityState<Track>;
   volume: number;
   recommendedTracks: EntityState<Track>;
 }
 
 const initialState: SpotifyState = {
-  tracks: [],
-  artistsTopTracks: [],
+  topTracks: tracksAdapter.getInitialState(),
+  artistsTopTracks: tracksAdapter.getInitialState(),
   volume: 80,
-  recommendedTracks: recommendedTracksAdapter.getInitialState(),
+  recommendedTracks: tracksAdapter.getInitialState(),
 };
 
 const spotifySlice = createSlice({
@@ -41,52 +41,62 @@ const spotifySlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(
-        getUserTopTracks.fulfilled,
-        (state, action: PayloadAction<Track[]>) => {
-          state.tracks = action.payload;
-        }
-      )
-      .addCase(
-        getUserTopArtitsTopTracks.fulfilled,
-        (state, action: PayloadAction<Track[]>) => {
-          state.artistsTopTracks = action.payload;
-        }
-      )
-      .addCase(
-        getRecommendations.fulfilled,
-        (state, action: PayloadAction<Track[]>) => {
-          recommendedTracksAdapter.removeAll(state.recommendedTracks);
-          recommendedTracksAdapter.upsertMany(
-            state.recommendedTracks,
-            action.payload
-          );
-        }
-      )
-      .addCase(
-        getSavedTracks.fulfilled,
-        (state, action: PayloadAction<Update<Track>[]>) => {
-          recommendedTracksAdapter.updateMany(
-            state.recommendedTracks,
-            action.payload
-          );
-        }
-      )
-      .addCase(
-        saveTrack.fulfilled,
-        (state, action: PayloadAction<Update<Track>>) => {
-          recommendedTracksAdapter.updateOne(
-            state.recommendedTracks,
-            action.payload
-          );
-        }
-      );
+      .addCase(getUserTopTracks.fulfilled, (state, action) => {
+        tracksAdapter.removeAll(state.topTracks);
+        tracksAdapter.upsertMany(state.topTracks, action.payload);
+      })
+      .addCase(getUserTopArtitsTopTracks.fulfilled, (state, action) => {
+        tracksAdapter.removeAll(state.artistsTopTracks);
+        tracksAdapter.upsertMany(
+          state.artistsTopTracks,
+          action.payload
+        );
+      })
+      .addCase(getRecommendations.fulfilled, (state, action) => {
+        tracksAdapter.removeAll(state.recommendedTracks);
+        tracksAdapter.upsertMany(
+          state.recommendedTracks,
+          action.payload
+        );
+      })
+      .addCase(getSavedTracks.fulfilled, (state, action) => {
+        tracksAdapter.updateMany(
+          state[action.payload.key],
+          action.payload.update
+        );
+      })
+      .addCase(saveTrack.fulfilled, (state, action) => {
+        tracksAdapter.updateOne(
+          state[action.payload.key],
+          action.payload.update
+        );
+      })
+      .addCase(removeSavedTrack.fulfilled, (state, action) => {
+        tracksAdapter.updateOne(
+          state[action.payload.key],
+          action.payload.update
+        );
+      });
   },
 });
 
 export const spotifyActions = spotifySlice.actions;
-export const { selectAll: selectAllRecommendedTracks } =
-  recommendedTracksAdapter.getSelectors(
-    (state: RootState) => state.spotify.recommendedTracks
-  );
+export const {
+  selectAll: selectAllRecommendedTracks,
+  selectIds: selectAllIdsRecommendedTracks,
+} = tracksAdapter.getSelectors(
+  (state: RootState) => state.spotify.recommendedTracks
+);
+export const {
+  selectAll: selectAllTopTracks,
+  selectIds: selectAllTopTracksIds,
+} = tracksAdapter.getSelectors(
+  (state: RootState) => state.spotify.topTracks
+);
+export const {
+  selectAll: selectAllArtistsTopTracks,
+  selectIds: selectAllArtistsTopTracksIds,
+} = tracksAdapter.getSelectors(
+  (state: RootState) => state.spotify.artistsTopTracks
+);
 export default spotifySlice.reducer;
