@@ -6,6 +6,18 @@ import { useEffect, useState } from 'react';
 export const useAppDispatch = () => useDispatch<AppDispatch>();
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 
+export const useBoolean = (
+  initValue = false
+): [boolean, { toggle: () => void; on: () => void; off: () => void }] => {
+  const [value, setValue] = useState(initValue);
+
+  const toggle = () => setValue(!value);
+  const on = () => setValue(true);
+  const off = () => setValue(false);
+
+  return [value, { toggle, on, off }];
+};
+
 export const useHashQuery = () => {
   return new URLSearchParams(useLocation().hash.substring(1));
 };
@@ -36,6 +48,6 @@ export const useAudio = (url: string, volume = 0.1) => {
     playing,
     toggle,
     pause,
-    play
+    play,
   };
 };
